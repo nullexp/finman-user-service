@@ -20,19 +20,16 @@ func NewUserService(us driver.UserService) *UserService {
 }
 
 func (us UserService) CreateUser(ctx context.Context, request *userv1.CreateUserRequest) (*userv1.CreateUserResponse, error) {
-
 	rs, err := us.service.CreateUser(ctx, model.CreateUserRequest{
 		Username: request.Username,
 		Password: request.Password,
 		RoleId:   request.RoleId,
 	})
-
 	if err != nil {
 		return nil, err
 	}
 
 	return &userv1.CreateUserResponse{Id: rs.Id}, nil
-
 }
 
 func castReadableToGrpcUser(readable model.UserReadable) *userv1.User {
@@ -48,13 +45,13 @@ func castReadableToGrpcUser(readable model.UserReadable) *userv1.User {
 
 func (us UserService) GetUserById(ctx context.Context, request *userv1.GetUserByIdRequest) (*userv1.GetUserByIdResponse, error) {
 	rs, err := us.service.GetUserById(ctx, model.GetUserByIdRequest{Id: request.Id})
-
 	if err != nil {
 		return nil, status.Errorf(codes.Internal, "GetUserById failed : %v", err)
 	}
 
 	return &userv1.GetUserByIdResponse{User: castReadableToGrpcUser(rs.User)}, nil
 }
+
 func (us *UserService) GetAllUsers(ctx context.Context, request *userv1.GetAllUsersRequest) (*userv1.GetAllUsersResponse, error) {
 	rs, err := us.service.GetAllUsers(ctx)
 	if err != nil {
@@ -71,7 +68,6 @@ func (us *UserService) GetAllUsers(ctx context.Context, request *userv1.GetAllUs
 }
 
 func (us *UserService) UpdateUser(ctx context.Context, request *userv1.UpdateUserRequest) (*userv1.UpdateUserResponse, error) {
-
 	err := us.service.UpdateUser(ctx, model.UpdateUserRequest{
 		Id:       request.Id,
 		Password: request.Password,

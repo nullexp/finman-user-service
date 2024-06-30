@@ -23,7 +23,6 @@ import (
 )
 
 func main() {
-
 	log.Println("Starting the server")
 
 	err := godotenv.Load()
@@ -38,12 +37,10 @@ func main() {
 			os.Getenv("DB_HOST"),
 			os.Getenv("DB_PORT"),
 			os.Getenv("DB_NAME")))
-
 	if err != nil {
 		log.Fatal(err)
 	}
 	if err := m.Up(); err != nil {
-		m.Drop()
 		log.Fatal(err)
 	}
 

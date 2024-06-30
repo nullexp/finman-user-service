@@ -35,7 +35,6 @@ func (us UserService) CreateUser(ctx context.Context, request model.CreateUserRe
 		IsAdmin:  false,
 		Password: ps,
 	})
-
 	if err != nil {
 		return nil, err
 	}
@@ -72,8 +71,8 @@ func (us UserService) GetUserById(ctx context.Context, request model.GetUserById
 		User: castUserToReadable(user),
 	}, nil
 }
-func (us UserService) GetAllUsers(ctx context.Context) (*model.GetAllUsersResponse, error) {
 
+func (us UserService) GetAllUsers(ctx context.Context) (*model.GetAllUsersResponse, error) {
 	users, err := us.userRepository.GetAllUsers(ctx)
 	if err != nil {
 		return nil, err
@@ -87,10 +86,9 @@ func (us UserService) GetAllUsers(ctx context.Context) (*model.GetAllUsersRespon
 	return &model.GetAllUsersResponse{
 		Users: out,
 	}, nil
-
 }
-func (us UserService) UpdateUser(ctx context.Context, request model.UpdateUserRequest) error {
 
+func (us UserService) UpdateUser(ctx context.Context, request model.UpdateUserRequest) error {
 	// Please note that this operation should be transactional but it is not
 	if err := request.Validate(ctx); err != nil {
 		return err
@@ -116,6 +114,7 @@ func (us UserService) UpdateUser(ctx context.Context, request model.UpdateUserRe
 
 	return us.userRepository.UpdateUser(ctx, *user)
 }
+
 func (us UserService) DeleteUser(ctx context.Context, request model.DeleteUserRequest) error {
 	if err := request.Validate(ctx); err != nil {
 		return err
@@ -136,6 +135,7 @@ func (us UserService) DeleteUser(ctx context.Context, request model.DeleteUserRe
 
 	return us.userRepository.DeleteUser(ctx, request.Id)
 }
+
 func (us UserService) GetUserByUsernameAndPassword(ctx context.Context, request model.GetUserByUsernameAndPasswordRequest) (*model.GetUserByUsernameAndPasswordResponse, error) {
 	if err := request.Validate(ctx); err != nil {
 		return nil, err
@@ -157,6 +157,7 @@ func (us UserService) GetUserByUsernameAndPassword(ctx context.Context, request 
 
 	return &model.GetUserByUsernameAndPasswordResponse{User: castUserToReadable(user)}, nil
 }
+
 func (us UserService) GetUsersWithPagination(ctx context.Context, request model.GetUsersWithPaginationRequest) (*model.GetUsersWithPaginationResponse, error) {
 	if err := request.Validate(ctx); err != nil {
 		return nil, err
