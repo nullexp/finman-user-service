@@ -1,0 +1,37 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres
+    container_name: postgres
+    environment:
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+      - ./internal/adapter/driven/db/migration/init.sql:/docker-entrypoint-initdb.d/init.sql  # Mount init.sql into the container
+
+  app:
+    image: finman-user-service:latest  # Specify the image name and tag
+    container_name: finman-auth-container
+    build:
+      dockerfile: Dockerfile
+      context: .
+    environment:
+      DB_HOST: postgres
+      DB_PORT: 5432
+      DB_USER: postgres
+      DB_PASSWORD: postgres
+      DB_NAME: finman-user
+      PORT: 8081
+      IP: 0.0.0.0
+    ports:
+      - "8081:8081"
+    depends_on:
+      - postgres
+    restart: always
+
+volumes:
+  postgres-data:
+ 
