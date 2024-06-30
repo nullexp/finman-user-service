@@ -12,6 +12,6 @@ type UserRepository interface {
 	GetAllUsers(context.Context) ([]model.User, error)
 	UpdateUser(context.Context, model.User) error
 	DeleteUser(context.Context, string) error
-	GetUserByUsernameAndPassword(ctx context.Context, username, password string) (*model.User, error)
+	GetUserByUsername(ctx context.Context, username string) (*model.User, error)
 	GetUsersWithPagination(ctx context.Context, offset, limit int) ([]model.User, error)
 }

@@ -103,14 +103,14 @@ func (ur UserRepository) DeleteUser(ctx context.Context, id string) error {
 	return nil
 }
 
-func (ur UserRepository) GetUserByUsernameAndPassword(ctx context.Context, username, password string) (*model.User, error) {
+func (ur UserRepository) GetUserByUsername(ctx context.Context, username string) (*model.User, error) {
 	query := `
 	SELECT id, username, password, role_id, is_admin, created_at, updated_at
 	FROM users
-	WHERE username = $1 AND password = $2
+	WHERE username = $1 
 `
 	var user model.User
-	err := ur.db.QueryRowContext(ctx, query, username, password).Scan(&user.Id, &user.Username, &user.Password, &user.RoleId, &user.IsAdmin, &user.CreatedAt, &user.UpdatedAt)
+	err := ur.db.QueryRowContext(ctx, query, username).Scan(&user.Id, &user.Username, &user.Password, &user.RoleId, &user.IsAdmin, &user.CreatedAt, &user.UpdatedAt)
 	if err != nil {
 		if errors.Is(err, sql.ErrNoRows) {
 			return nil, nil // Return nil when no rows are found

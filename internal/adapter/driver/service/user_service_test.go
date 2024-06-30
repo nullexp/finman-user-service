@@ -2,6 +2,7 @@ package service
 
 import (
 	"context"
+	"errors"
 	"testing"
 	"time"
 
@@ -16,6 +17,13 @@ type MockPasswordService struct{}
 
 func (m MockPasswordService) HashPassword(password string) (string, error) {
 	return "hashed" + password, nil
+}
+
+func (m MockPasswordService) ComparePassword(hashedPassword, textPassword string) error {
+	if hashedPassword == "hashed"+textPassword {
+		return nil
+	}
+	return errors.New("password does not match")
 }
 
 func NewMockPasswordService() *MockPasswordService {
@@ -181,7 +189,7 @@ func TestUserServiceGetUserByUsernameAndPassword(t *testing.T) {
 	ctx := context.Background()
 	mockUser := model.User{
 		Username:  "testuser",
-		Password:  "hashedpassword",
+		Password:  "hashedpassword", // This should match the logic in MockPasswordService
 		RoleId:    uid,
 		CreatedAt: time.Now(),
 		UpdatedAt: time.Now(),
@@ -192,7 +200,7 @@ func TestUserServiceGetUserByUsernameAndPassword(t *testing.T) {
 
 	request := portModels.GetUserByUsernameAndPasswordRequest{
 		Username: "testuser",
-		Password: "password",
+		Password: "password", // This should match the logic in MockPasswordService
 	}
 
 	response, err := us.GetUserByUsernameAndPassword(ctx, request)

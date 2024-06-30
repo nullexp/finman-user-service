@@ -57,9 +57,9 @@ func (m *MockUserRepository) DeleteUser(ctx context.Context, id string) error {
 	return nil
 }
 
-func (m *MockUserRepository) GetUserByUsernameAndPassword(ctx context.Context, username, password string) (*model.User, error) {
+func (m *MockUserRepository) GetUserByUsername(ctx context.Context, username string) (*model.User, error) {
 	for _, user := range m.users {
-		if user.Username == username && user.Password == password {
+		if user.Username == username {
 			return &user, nil
 		}
 	}

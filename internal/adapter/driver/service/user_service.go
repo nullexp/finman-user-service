@@ -141,17 +141,18 @@ func (us UserService) GetUserByUsernameAndPassword(ctx context.Context, request 
 		return nil, err
 	}
 
-	ps, err := us.passwordService.HashPassword(request.Password)
-	if err != nil {
-		return nil, err
-	}
-
-	user, err := us.userRepository.GetUserByUsernameAndPassword(ctx, request.Username, ps)
+	user, err := us.userRepository.GetUserByUsername(ctx, request.Username)
 	if err != nil {
 		return nil, err
 	}
 
 	if user == nil {
+		return nil, domain.ErrUserNotFound
+	}
+
+	err = us.passwordService.ComparePassword(user.Password, request.Password)
+	if err != nil {
+		// For security, we do not provide more info
 		return nil, domain.ErrUserNotFound
 	}
 

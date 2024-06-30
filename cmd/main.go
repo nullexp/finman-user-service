@@ -38,10 +38,10 @@ func main() {
 			os.Getenv("DB_PORT"),
 			os.Getenv("DB_NAME")))
 	if err != nil {
-		log.Fatal(err)
+		log.Fatal("Error loading migration files ", err)
 	}
-	if err := m.Up(); err != nil {
-		log.Fatal(err)
+	if err := m.Up(); err != nil && err != migrate.ErrNoChange {
+		log.Fatal("Error calling up function ", err)
 	}
 
 	dsn := "host=" + os.Getenv("DB_HOST") +
