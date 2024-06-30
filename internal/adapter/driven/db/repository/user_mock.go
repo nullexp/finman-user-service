@@ -25,15 +25,15 @@ func (m *MockUserRepository) CreateUser(ctx context.Context, user model.User) (s
 	return id, nil
 }
 
-func (m *MockUserRepository) GetUserById(id string) (model.User, error) {
+func (m *MockUserRepository) GetUserById(ctx context.Context, id string) (*model.User, error) {
 	user, ok := m.users[id]
 	if !ok {
-		return model.User{}, errors.New("user not found")
+		return nil, errors.New("user not found")
 	}
-	return user, nil
+	return &user, nil
 }
 
-func (m *MockUserRepository) GetAllUsers() ([]model.User, error) {
+func (m *MockUserRepository) GetAllUsers(ctx context.Context) ([]model.User, error) {
 	var users []model.User
 	for _, user := range m.users {
 		users = append(users, user)
@@ -41,7 +41,7 @@ func (m *MockUserRepository) GetAllUsers() ([]model.User, error) {
 	return users, nil
 }
 
-func (m *MockUserRepository) UpdateUser(user model.User) error {
+func (m *MockUserRepository) UpdateUser(ctx context.Context, user model.User) error {
 	if _, ok := m.users[user.Id]; !ok {
 		return errors.New("user not found")
 	}
@@ -49,7 +49,7 @@ func (m *MockUserRepository) UpdateUser(user model.User) error {
 	return nil
 }
 
-func (m *MockUserRepository) DeleteUser(id string) error {
+func (m *MockUserRepository) DeleteUser(ctx context.Context, id string) error {
 	if _, ok := m.users[id]; !ok {
 		return errors.New("user not found")
 	}
@@ -57,16 +57,16 @@ func (m *MockUserRepository) DeleteUser(id string) error {
 	return nil
 }
 
-func (m *MockUserRepository) GetUserByUsernameAndPassword(username, password string) (model.User, error) {
+func (m *MockUserRepository) GetUserByUsernameAndPassword(ctx context.Context, username, password string) (*model.User, error) {
 	for _, user := range m.users {
 		if user.Username == username && user.Password == password {
-			return user, nil
+			return &user, nil
 		}
 	}
-	return model.User{}, errors.New("user not found")
+	return nil, errors.New("user not found")
 }
 
-func (m *MockUserRepository) GetUsersWithPagination(offset, limit int) ([]model.User, error) {
+func (m *MockUserRepository) GetUsersWithPagination(ctx context.Context, offset, limit int) ([]model.User, error) {
 	var users []model.User
 	count := 0
 	for _, user := range m.users {
