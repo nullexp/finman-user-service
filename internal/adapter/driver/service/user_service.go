@@ -36,6 +36,10 @@ func (us UserService) CreateUser(ctx context.Context, request model.CreateUserRe
 		Password: ps,
 	})
 
+	if err != nil {
+		return nil, err
+	}
+
 	return &model.CreateUserResponse{Id: id}, nil
 }
 
