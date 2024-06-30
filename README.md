@@ -1,99 +1,85 @@
+# FinMan User Service
 
-# FinMan Auth Service
-
-FinMan Auth Service is a microservice responsible for handling authentication and JWT token management. This service provides functionalities to create tokens based on user credentials and validates tokens for authentication if required.
+The FinMan User Service is a microservice responsible for managing user information in the FinMan system. It includes functionalities for creating, retrieving, updating, and deleting users, as well as handling user authentication and pagination.
 
 ## Table of Contents
-
-- [Prerequisites](#prerequisites)
-- [Environment Variables](#environment-variables)
+- [Features](#features)
+- [Requirements](#requirements)
 - [Installation](#installation)
 - [Usage](#usage)
-- [Testing](#testing)
+- [Environment Variables](#environment-variables)
 - [API Documentation](#api-documentation)
 - [Contributing](#contributing)
 - [License](#license)
 
-## Prerequisites
+## Features
+- Create a new user
+- Retrieve user by ID
+- Retrieve all users
+- Update user details
+- Delete a user
+- Get user by username and password
+- Get users with pagination
+- Handle user authentication
+- Database migrations using [golang-migrate](https://github.com/golang-migrate/migrate)
+- JWT authentication
+- Password hashing with bcrypt
 
-- Go 1.22 or higher
-- Docker
-
-## Environment Variables
-
-Create a `.env` file in the root directory of the project and add the following environment variables:
-
-```env
-# .env
-JWT_SECRET=eDM!":jmx2/QoHBlY'.O8e4?Uy,",9
-JWT_EXPIRE_MINUTE=20
-PORT=8080
-IP=0.0.0.0
-```
+## Requirements
+- Go 1.18+
+- PostgreSQL
+- Docker (for containerized deployment)
 
 ## Installation
-
 1. Clone the repository:
-
-   ```bash
-   git clone https://github.com/your-username/finman-user-service.git
-   cd finman-user-service
-   ```
+    ```bash
+    git clone https://github.com/yourusername/finman-user-service.git
+    cd finman-user-service
+    ```
 
 2. Install dependencies:
+    ```bash
+    go mod tidy
+    ```
 
-   ```bash
-   go mod download
-   ```
+3. Set up the environment variables in a `.env` file (see [Environment Variables](#environment-variables) section).
+
+4. Run the database migrations:
+    ```bash
+    migrate -path ./migrations -database postgres://$DB_USER:$DB_PASSWORD@$DB_HOST:$DB_PORT/$DB_NAME?sslmode=disable up
+    ```
 
 ## Usage
-
 ### Running the Service
+1. Build the service:
+    ```bash
+    go build -o user-service .
+    ```
 
-You can run the service locally using the following command:
+2. Run the service:
+    ```bash
+    ./user-service
+    ```
 
-```bash
-go run main.go
-```
-
-Alternatively, you can run the service using Docker:
-
+### Using Docker
 1. Build the Docker image:
-
-   ```bash
-   docker build -t finman-user-service .
-   ```
+    ```bash
+    docker build -t finman-user-service .
+    ```
 
 2. Run the Docker container:
+    ```bash
+   docker-compose up --build 
+    ```
 
-   ```bash
-   docker run --env-file .env -p 8080:8080 finman-user-service
-   ```
-
-### Environment Variables
-
-The service uses the following environment variables:
-
-- `JWT_SECRET`: The secret key used to sign the JWT tokens.
-- `JWT_EXPIRE_MINUTE`: The expiration time for JWT tokens in minutes.
-- `PORT`: The port on which the service will run.
-- `IP`: The IP address on which the service will bind.
-
-## Testing
-
-You can run the tests using the following command:
-
-```bash
-go test ./...
-```
-
-For testing with Docker, use the following command:
-
-```bash
-docker build -t finman-user-service-test -f Dockerfile.test .
-docker run --env-file .env finman-user-service-test
-```
-
-## API Documentation
-
-The API documentation is generated using Swagger. To access the API documentation, start the service and navigate to `http://localhost:8080/swagger/index.html`.
+## Environment Variables
+Create a `.env` file in the root directory with the following content:
+  ```bash
+  DB_HOST=localhost
+  DB_PORT=5432
+  DB_USER=postgres
+  DB_PASSWORD=postgres
+  DB_NAME=finman-user
+  PORT=8081
+  IP=0.0.0.0
+      ```

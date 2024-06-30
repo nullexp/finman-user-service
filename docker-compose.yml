@@ -14,7 +14,7 @@ services:
 
   app:
     image: finman-user-service:latest  # Specify the image name and tag
-    container_name: finman-auth-container
+    container_name: finman-user-container
     build:
       dockerfile: Dockerfile
       context: .
