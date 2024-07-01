@@ -44,10 +44,8 @@ The FinMan User Service is a microservice responsible for managing user informat
 
 3. Set up the environment variables in a `.env` file (see [Environment Variables](#environment-variables) section).
 
-4. Run the database migrations:
-    ```bash
-    migrate -path ./migrations -database postgres://$DB_USER:$DB_PASSWORD@$DB_HOST:$DB_PORT/$DB_NAME?sslmode=disable up
-    ```
+or simply run it with docker
+     
 
 ## Usage
 ### Running the Service
