@@ -16,5 +16,5 @@ RUN go build -o finman-user-service ./cmd/
 # Expose port 8081 to the outside world
 EXPOSE 8081
 
-# Set up PostgreSQL and run the executable
+# Run the executable
 CMD ["./finman-user-service"]
