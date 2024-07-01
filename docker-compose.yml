@@ -8,11 +8,13 @@ services:
       POSTGRES_PASSWORD: postgres
     ports:
       - "5432:5432"
+    networks:
+      - finman-network
     volumes:
       - postgres-user-data:/var/lib/postgresql/data
       - ./internal/adapter/driven/db/migration/init.sql:/docker-entrypoint-initdb.d/init.sql  # Mount init.sql into the container
 
-  app:
+  finman-user-service:
     image: finman-user-service:latest  # Specify the image name and tag
     container_name: finman-user-container
     build:
@@ -31,6 +33,13 @@ services:
     depends_on:
       - postgres
     restart: always
+    networks:
+      - finman-network
+
+networks:
+  finman-network:
+    driver: bridge
+    external: true
 
 volumes:
   postgres-user-data:
