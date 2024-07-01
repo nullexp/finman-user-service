@@ -26,8 +26,7 @@ The FinMan User Service is a microservice responsible for managing user informat
 - Password hashing with bcrypt
 
 ## Requirements
-- Go 1.18+
-- PostgreSQL
+- Go 1.22+
 - Docker (for containerized deployment)
 
 ## Installation
