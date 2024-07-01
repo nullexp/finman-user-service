@@ -1,0 +1,66 @@
+syntax = "proto3";
+
+package user.v1;
+
+service RoleService {
+    rpc CreateRole(CreateRoleRequest) returns (CreateRoleResponse);
+    rpc GetRoleById(GetRoleByIdRequest) returns (GetRoleByIdResponse);
+    rpc GetAllRoles(GetAllRolesRequest) returns (GetAllRolesResponse);
+    rpc UpdateRole(UpdateRoleRequest) returns (UpdateRoleResponse);
+    rpc DeleteRole(DeleteRoleRequest) returns (DeleteRoleResponse);
+    rpc IsUserPermittedToPermission(IsUserPermittedToPermissionRequest) returns (IsUserPermittedToPermissionResponse);
+}
+
+message CreateRoleRequest {
+    string name = 1;
+    repeated string permissions = 2;
+}
+
+message CreateRoleResponse {
+    string id = 1;
+}
+
+message GetRoleByIdRequest {
+    string id = 1;
+}
+
+message GetRoleByIdResponse {
+    Role role = 1;
+}
+
+message GetAllRolesRequest {}
+
+message GetAllRolesResponse {
+    repeated Role roles = 1;
+}
+
+message UpdateRoleRequest {
+    string id = 1;
+    string name = 2;
+    repeated string permissions = 3;
+}
+
+message UpdateRoleResponse {}
+
+message DeleteRoleRequest {
+    string id = 1;
+}
+
+message DeleteRoleResponse {}
+
+message Role {
+    string id = 1;
+    string name = 2;
+    repeated string permissions = 3;
+    string created_at = 4;
+    string updated_at = 5;
+}
+
+message IsUserPermittedToPermissionRequest {
+  string user_id=1;
+  string permission=2;
+}
+
+message IsUserPermittedToPermissionResponse{
+  bool is_permitted=1;
+}

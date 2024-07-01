@@ -87,6 +87,11 @@ func main() {
 	grpcService := grpcDriver.NewUserService(userService)
 	userv1.RegisterUserServiceServer(s, grpcService)
 
+	roleRepo := repository.NewRoleRepository(db)
+	roleService := driver.NewRoleService(roleRepo, userRepo)
+	roleGrpcService := grpcDriver.NewRoleService(roleService)
+	userv1.RegisterRoleServiceServer(s, roleGrpcService)
+
 	// Register reflection service on gRPC server.
 	reflection.Register(s)
 

@@ -13,7 +13,6 @@ func NewBcryptPasswordService(cost int) *BcryptPasswordService {
 
 // HashPassword hashes the provided password using bcrypt.
 func (b *BcryptPasswordService) HashPassword(password string) (string, error) {
-
 	hashedPassword, err := bcrypt.GenerateFromPassword([]byte(password), b.cost)
 	if err != nil {
 		return "", err
