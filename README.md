@@ -1,6 +1,6 @@
 # FinMan User Service
 
-The FinMan User Service is a microservice responsible for managing user information in the FinMan system. It includes functionalities for creating, retrieving, updating, and deleting users, as well as handling user authentication and pagination.
+The FinMan User Service is a microservice responsible for managing user information in the FinMan system. It includes functionalities for creating, retrieving, updating, and deleting users, as well as handling user authentication and pagination. Please note that the default username and password is admin.
 
 ## Table of Contents
 - [Features](#features)
@@ -80,3 +80,5 @@ Create a `.env` file in the root directory with the following content:
   PORT=8081
   IP=0.0.0.0
       ```
+
+
