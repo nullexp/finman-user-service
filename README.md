@@ -14,6 +14,7 @@ The FinMan User Service is a microservice responsible for managing user informat
 
 ## Folder Struture
 
+ ```bash
 .
 ├── cmd
 │   └── main.go
@@ -45,7 +46,7 @@ The FinMan User Service is a microservice responsible for managing user informat
 ├── docker-compose.yml
 ├── go.mod
 └── README.md
- 
+  ```
 ## Features
 - Create a new user
 - Retrieve user by ID
