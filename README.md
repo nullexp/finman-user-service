@@ -81,4 +81,38 @@ Create a `.env` file in the root directory with the following content:
   IP=0.0.0.0
       ```
 
+## Folder Struture
+
+.
+├── cmd
+│   └── main.go
+├── configs
+│   └── config.go
+├── internal
+│   ├── driven
+│   │   ├── repository
+│   │   │   ├── postgres
+│   │   │   │   └── user_repository.go
+│   │   │   └── repository.go
+│   │   └── service
+│   │       └── user_service.go
+│   ├── driver
+│   │   ├── api
+│   │   │   ├── handlers
+│   │   │   │   └── user_handler.go
+│   │   │   ├── middlewares
+│   │   │   │   └── auth_middleware.go
+│   │   │   └── routes.go
+│   │   └── db
+│   │       └── connection.go
+├── migrations
+│   └── initial_schema.sql
+├── pkg
+│   └── models
+│       └── user.go
+├── Dockerfile
+├── docker-compose.yml
+├── go.mod
+└── README.md
+
 
